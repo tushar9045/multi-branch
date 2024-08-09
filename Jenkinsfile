@@ -10,7 +10,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = 'tusharsaini9045/101Airborne'
+        DOCKER_IMAGE = 'tusharsaini9045/101airborne'
         DOCKER_TAG = 'v-1'
         DOCKERFILE_PATH = 'Dockerfile'
     }
