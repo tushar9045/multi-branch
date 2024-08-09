@@ -23,13 +23,13 @@ pipeline {
     stages {
         stage('Checkout Jenkinsfile') {
             steps {
-             dir('dockerfile-repo') {
-                checkout([$class: 'GitSCM',
+               dir('dockerfile-repo') {
+                 checkout([$class: 'GitSCM',
                         branches: [[name: "*/${params.JENKINSFILE_BRANCH}"]],
                         userRemoteConfigs: scm.userRemoteConfigs
                     ])
             }
-        }
+            }
     }        
 
         stage('Checkout Dockerfile') {
