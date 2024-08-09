@@ -34,12 +34,12 @@ pipeline {
             steps {
                 // Clone the repository with the Dockerfile in a separate directory
                 script {
-                    dir('dockerfile-repo') {
+                    
                         checkout([$class: 'GitSCM',
                                 branches: [[name: "*/${params.DOCKERFILE_BRANCH}"]],
                                 userRemoteConfigs: scm.userRemoteConfigs
                             ])
-                    }
+                    
                 }
             }
         }
