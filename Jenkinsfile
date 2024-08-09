@@ -52,7 +52,7 @@ pipeline {
         stage('createfile') {
            steps {
               script{
-                      sh "touch ${WORKSPACE}/abc.txt"
+                      sh "touch ${WORKSPACE}/abcd.txt"
               }
            }
         }
