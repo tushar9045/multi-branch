@@ -7,6 +7,10 @@ pipeline {
             choices: ['main', 'test'],
             description: 'Select the branch for the Dockerfile'
         )
+         string(
+            name: 'TARGET_BRANCH',
+            description: 'Branch to push the created file'
+        )
     }
 
     environment {
@@ -52,9 +56,24 @@ pipeline {
         stage('createfile') {
            steps {
               script{
-                      sh "touch ${WORKSPACE}/abcd.txt"
+                   dir('dockerfile-repo') {
+                        sh "touch abcd.txt"
+                    }
+                      
               }
            }
+        }
+         stage('Commit and Push File') {
+            steps {
+                script {
+                    dir('dockerfile-repo') {
+                        sh "git checkout ${params.TARGET_BRANCH}"
+                        sh "git add abcd.txt"
+                        sh "git commit -m 'Add abcd.txt file'"
+                        sh "git push origin ${params.TARGET_BRANCH}"
+                    }
+                }
+            }
         }
     
     }
