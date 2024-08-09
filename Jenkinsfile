@@ -56,15 +56,6 @@ pipeline {
               }
            }
         }
-
+    
     }
-    post {
-        always {
-            script {
-                cleanWs()
 
-                sh "docker rmi ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}"
-            }
-        }
-    }
-}
