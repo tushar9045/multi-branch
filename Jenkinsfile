@@ -15,7 +15,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = 'tusharsaini9045/101-airborne'
+        DOCKER_IMAGE = 'tusharsaini9045/php-webapp'
         DOCKER_TAG = 'v-1'
         DOCKERFILE_PATH = 'Dockerfile'
     }
@@ -23,25 +23,23 @@ pipeline {
     stages {
         stage('Checkout Jenkinsfile') {
             steps {
-               dir('dockerfile-repo') {
-                 checkout([$class: 'GitSCM',
+                checkout([$class: 'GitSCM',
                         branches: [[name: "*/${params.JENKINSFILE_BRANCH}"]],
                         userRemoteConfigs: scm.userRemoteConfigs
                     ])
             }
-            }
-    }        
+        }
 
         stage('Checkout Dockerfile') {
             steps {
-                // Clone the repository with the Dockerfile in a separate directory
+                
                 script {
-                    
+                    dir('dockerfile-repo') {
                         checkout([$class: 'GitSCM',
                                 branches: [[name: "*/${params.DOCKERFILE_BRANCH}"]],
                                 userRemoteConfigs: scm.userRemoteConfigs
                             ])
-                    
+                    }
                 }
             }
         }
@@ -58,7 +56,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Login to Docker Hub (or your Docker registry)
+                    
                     withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                         sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                     }
@@ -78,4 +76,3 @@ pipeline {
         }
     }
 }
-
