@@ -3,11 +3,6 @@ pipeline {
 
     parameters {
         choice(
-            name: 'JENKINSFILE_BRANCH',
-            choices: ['main', 'test'],
-            description: 'Select the branch for the Jenkinsfile'
-        )
-        choice(
             name: 'DOCKERFILE_BRANCH',
             choices: ['main', 'test'],
             description: 'Select the branch for the Dockerfile'
@@ -20,19 +15,8 @@ pipeline {
         DOCKERFILE_PATH = 'Dockerfile'
     }
 
-    stages {
-        stage('Checkout Jenkinsfile') {
-            steps {
-                checkout([$class: 'GitSCM',
-                        branches: [[name: "*/${params.JENKINSFILE_BRANCH}"]],
-                        userRemoteConfigs: scm.userRemoteConfigs
-                    ])
-            }
-        }
-
         stage('Checkout Dockerfile') {
             steps {
-                
                 script {
                     dir('dockerfile-repo') {
                         checkout([$class: 'GitSCM',
@@ -65,6 +49,14 @@ pipeline {
                 }
             }
         }
+        stage('createfile') {
+           steps {
+              script{
+                      sh "touch ${WORKSPACE}/abc.txt"
+              }
+           }
+        }
+
     }
     post {
         always {
