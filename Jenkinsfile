@@ -14,7 +14,7 @@ pipeline {
         DOCKER_TAG = 'v-1'
         DOCKERFILE_PATH = 'Dockerfile'
     }
-
+    stages {
         stage('Checkout Dockerfile') {
             steps {
                 script {
@@ -58,4 +58,5 @@ pipeline {
         }
     
     }
+}    
 
