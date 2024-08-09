@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm /etc/nginx/sites-enabled/default
 COPY . /TMS /var/www/html/
-COPY nginx.conf /etc/nginx/sites-enabled/
+
 
 EXPOSE 80 443
 
