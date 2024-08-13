@@ -65,9 +65,9 @@ pipeline {
         stage('Create File') {
             steps {
                 script {
-                    {
+                    
                         sh "touch abcd.txt"
-                    }
+                    
                 }
             }
         }
@@ -75,7 +75,7 @@ pipeline {
         stage('Commit and Push File') {
             steps {
                 script {
-                    {
+                    
                         sh "git checkout ${params.TARGET_BRANCH}"
                         sh "git add abcd.txt"
                         sh "git config user.name '${params.USER_NAME}'"
@@ -84,7 +84,7 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'git_token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
                             sh "git push https://$GIT_USER:$GIT_TOKEN@github.com/tushar9045/multi-branch.git ${params.TARGET_BRANCH}"
                         }
-                    }
+                    
                 }
             }
         }
