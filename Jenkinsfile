@@ -65,7 +65,7 @@ pipeline {
         stage('Create File') {
             steps {
                 script {
-                    dir('dockerfile-repo') {
+                    dir('dockerfile-2') {
                         sh "touch abcd.txt"
                     }
                 }
@@ -75,7 +75,7 @@ pipeline {
         stage('Commit and Push File') {
             steps {
                 script {
-                    dir('dockerfile-repo') {
+                    dir('dockerfile-2') {
                         sh "git checkout ${params.TARGET_BRANCH}"
                         sh "git add abcd.txt"
                         // sh "git config user.name '${params.USER_NAME}'"
