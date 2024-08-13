@@ -11,14 +11,14 @@ pipeline {
             name: 'TARGET_BRANCH',
             description: 'Branch to push the created file'
         )
-        // string(
-        //     name: 'USER_NAME',
-        //     description: 'Git user name'
-        // )
-        // string(
-        //     name: 'USER_MAIL',
-        //     description: 'Git user email'
-        // )
+        string(
+            name: 'USER_NAME',
+            description: 'Git user name'
+        )
+        string(
+            name: 'USER_MAIL',
+            description: 'Git user email'
+        )
     }
 
     environment {
@@ -65,7 +65,7 @@ pipeline {
         stage('Create File') {
             steps {
                 script {
-                    dir('dockerfile-2') {
+                    dir('dockerfile-3') {
                         sh "touch abcd.txt"
                     }
                 }
@@ -75,11 +75,11 @@ pipeline {
         stage('Commit and Push File') {
             steps {
                 script {
-                    dir('dockerfile-2') {
+                    dir('dockerfile-3') {
                         sh "git checkout ${params.TARGET_BRANCH}"
                         sh "git add abcd.txt"
-                        // sh "git config user.name '${params.USER_NAME}'"
-                        // sh "git config user.email '${params.USER_MAIL}'"
+                        sh "git config user.name '${params.USER_NAME}'"
+                        sh "git config user.email '${params.USER_MAIL}'"
                         sh "git commit -m 'Add abcd.txt file'"
                         withCredentials([usernamePassword(credentialsId: 'git_token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
                             sh "git push https://$GIT_USER:$GIT_TOKEN@github.com/tushar9045/multi-branch.git ${params.TARGET_BRANCH}"
